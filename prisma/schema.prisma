@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String   @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  createdAt         DateTime @default(now()) @map(name: "created_at")
+  updatedAt         DateTime @default(now()) @map(name: "updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map(name: "accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map(name: "sessions")
+}
+
+enum UserRole {
+  ADMIN
+  SUPPLIER
+  ORGANIZATION
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @default(now()) @map(name: "updated_at")
+  address       Address?
+  role          UserRole  @default(SUPPLIER)
+  isRoleUpdated Boolean   @default(false)
+  accounts      Account[]
+  sessions      Session[]
+  products      Product[]
+
+  @@map(name: "users")
+}
+
+model Address {
+  id         String   @id @default(cuid())
+  street     String
+  city       String
+  state      String
+  postalCode String
+  userId     String   @unique
+  user       User     @relation(fields: [userId], references: [id])
+  createdAt  DateTime @default(now()) @map(name: "created_at")
+  updatedAt  DateTime @default(now()) @map(name: "updated_at")
+
+  @@map("addresses")
+}
+
+model Warehouse {
+  id          String      @id @default(cuid())
+  name        String
+  location    String
+  capacity    Int
+  Inventories Inventory[]
+}
+
+model Inventory {
+  id           String     @id @default(cuid())
+  quantity     Int
+  location     String
+  reorderPoint Int
+  products     Product[]
+  warehouseId  String?
+  Warehouse    Warehouse? @relation(fields: [warehouseId], references: [id])
+}
+
+enum Units {
+  KILOGRAM
+  LITER
+}
+
+model Product {
+  id          String     @id @default(cuid())
+  name        String
+  description String?
+  weight      Float?
+  unit        Units      @default(KILOGRAM)
+  cost        Float?
+  color       String
+  userId      String
+  user        User       @relation(fields: [userId], references: [id])
+  inventoryId String?
+  Inventory   Inventory? @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
+  createdAt   DateTime   @default(now()) @map(name: "created_at")
+  updatedAt   DateTime   @default(now()) @map(name: "updated_at")
+
+  @@map(name: "products")
+}
+
+model File {
+  id           String   @id @default(cuid())
+  metadate     Json?
+  path         Json?
+  pathOrder    String[]
+  size         Float
+  thumbnailUrl String?
+  uploadedAt   DateTime @default(now()) @map(name: "uploaded_at")
+  url          String
+
+  @@map("files")
+}
