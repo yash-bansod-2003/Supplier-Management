@@ -36,7 +36,7 @@ export async function PATCH(
       },
       data: {
         address: {
-          update: {
+          create: {
             street: payload.street,
             city: payload.city,
             state: payload.state,
@@ -52,6 +52,6 @@ export async function PATCH(
       return new Response(JSON.stringify(error.issues), { status: 422 });
     }
 
-    return new Response(null, { status: 500 });
+    return new Response(JSON.stringify(error), { status: 500 });
   }
 }

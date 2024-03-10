@@ -22,6 +22,8 @@ export type SidebarNavItem = {
   disabled?: boolean;
   external?: boolean;
   icon?: keyof typeof Icons;
+  isAdmin?: boolean;
+  isOrganization?: boolean;
 } & (
   | {
       href: string;

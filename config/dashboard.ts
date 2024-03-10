@@ -9,6 +9,18 @@ export const dashboardConfig: DashboardConfig = {
       icon: "overview",
     },
     {
+      title: "Users",
+      href: "/dashboard/users",
+      icon: "group",
+      isAdmin: true,
+    },
+    {
+      title: "Suppliers",
+      href: "/dashboard/users",
+      icon: "group",
+      isOrganization: true,
+    },
+    {
       title: "Warehouse",
       href: "/dashboard/warehouses",
       icon: "warehouse",

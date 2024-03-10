@@ -9,7 +9,7 @@ import * as z from "zod";
 
 import { cn } from "@/lib/utils";
 import { userAddressSchema } from "@/lib/validations/user";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -75,14 +75,12 @@ export function UserAddressForm({
       }),
     });
 
-    console.log(response);
-
     setIsSaving(false);
 
     if (!response?.ok) {
       return toast({
         title: "Something went wrong.",
-        description: "Your name was not updated. Please try again.",
+        description: "Your address was not updated. Please try again.",
         variant: "destructive",
       });
     }

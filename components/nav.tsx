@@ -6,12 +6,14 @@ import { usePathname } from "next/navigation";
 import { SidebarNavItem } from "@/types";
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/icons";
+import { User } from "@prisma/client";
 
 interface DashboardNavProps {
   items: SidebarNavItem[];
+  user: Pick<User, "role">;
 }
 
-export function DashboardNav({ items }: DashboardNavProps) {
+export function DashboardNav({ items, user }: DashboardNavProps) {
   const path = usePathname();
 
   if (!items?.length) {
@@ -22,8 +24,15 @@ export function DashboardNav({ items }: DashboardNavProps) {
     <nav className="grid items-start gap-2">
       {items.map((item, index) => {
         const Icon = Icons[item.icon || "arrowRight"];
+
+        const shouldRenderLink =
+          (item.isAdmin && user.role === "ADMIN") ||
+          item.isOrganization ||
+          (!item.isAdmin && !item.isOrganization);
+
         return (
-          item.href && (
+          item.href &&
+          shouldRenderLink && (
             <Link key={index} href={item.disabled ? "/" : item.href}>
               <span
                 className={cn(

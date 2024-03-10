@@ -17,6 +17,7 @@ import {
   MoreVertical,
   Pizza,
   Plus,
+  GroupIcon,
   Settings,
   SunMedium,
   User,
@@ -47,6 +48,7 @@ import {
   UploadCloud,
   Trash2,
   FileWarning,
+  Users,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -84,6 +86,7 @@ export const Icons = {
   warehouse: Warehouse,
   inventory: Boxes,
   trash: Trash2,
+  group: Users,
   fileWarning: FileWarning,
   post: FileText,
   notification: BellRing,
