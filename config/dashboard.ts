@@ -16,8 +16,8 @@ export const dashboardConfig: DashboardConfig = {
     },
     {
       title: "Suppliers",
-      href: "/dashboard/users",
-      icon: "group",
+      href: "/dashboard/suppliers",
+      icon: "store",
       isOrganization: true,
     },
     {
