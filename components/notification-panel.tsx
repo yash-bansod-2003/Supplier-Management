@@ -6,7 +6,7 @@ type NotificationPanelProps = React.AllHTMLAttributes<HTMLDivElement>;
 const NotificationPanel: React.FC<NotificationPanelProps> = () => {
   return (
     <Button variant="ghost" size="icon">
-      <Icons.notification />
+      <Icons.notification className="w-5 h-5" />
     </Button>
   );
 };
