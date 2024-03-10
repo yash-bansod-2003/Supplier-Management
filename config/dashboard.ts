@@ -10,12 +10,12 @@ export const dashboardConfig: DashboardConfig = {
     },
     {
       title: "Warehouse",
-      href: "/dashboard/warehouse",
+      href: "/dashboard/warehouses",
       icon: "warehouse",
     },
     {
       title: "Inventory",
-      href: "/dashboard/inventory",
+      href: "/dashboard/inventories",
       icon: "inventory",
     },
     {

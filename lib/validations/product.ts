@@ -11,5 +11,8 @@ export const productSchema = z.object({
     }),
   weight: z.string().min(1).max(32).optional(),
   unit: z.nativeEnum($Enums.Units),
-  cost: z.string().min(1).max(20)
+  quantity: z.string(),
+  category: z.string().max(100),
+  inventoryId: z.string(),
+  cost: z.string().min(1).max(20),
 });

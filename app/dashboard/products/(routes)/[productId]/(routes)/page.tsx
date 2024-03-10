@@ -22,9 +22,15 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
     }
   });
 
+  const inventories = await db.inventory.findMany({
+    where: {
+      userId: user.id
+    }
+  });
+
   return (
     <DashboardShell>
-      <ProductForm product={product} />
+      <ProductForm product={product} inventories={inventories} />
     </DashboardShell>
   );
 };

@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth/next";
 import { z } from "zod";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { productSchema } from "@/lib/validations/product";
+import { inventorySchema } from "@/lib/validations/inventory";
 
 export async function POST(req: Request) {
   try {
@@ -16,37 +16,20 @@ export async function POST(req: Request) {
 
     // Get the request body and validate it.
     const body = await req.json();
-    const payload = productSchema.parse(body);
+    const payload = inventorySchema.parse(body);
 
-    // create the Product.
-    const {
-      name,
-      description,
-      color,
-      weight,
-      unit,
-      cost,
-      category,
-      quantity,
-      inventoryId,
-    } = payload;
-
-    const dbProduct = await db.product.create({
+    // create the Inventory.
+    const dbInventory = await db.inventory.create({
       data: {
-        name,
+        quantity: Number(payload.quantity),
         userId: session.user.id,
-        description,
-        color,
-        weight: Number(weight),
-        unit,
-        cost: Number(cost),
-        category,
-        quantity: Number(quantity),
-        inventoryId,
+        location: payload.location,
+        reorderPoint: Number(payload.reorderPoint),
+        warehouseId: payload.warehouseId,
       },
     });
 
-    return NextResponse.json(dbProduct, { status: 201 });
+    return NextResponse.json(dbInventory, { status: 201 });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new NextResponse(JSON.stringify(error.issues), { status: 422 });

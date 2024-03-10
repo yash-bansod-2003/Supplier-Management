@@ -1,8 +1,15 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
 import { Icons } from "../icons";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export const Video = () => {
   return (
@@ -20,13 +27,29 @@ export const Video = () => {
         </p>
       </div>
       <div className="mx-auto flex justify-center md:max-w-[64rem] relative">
-        <div className="overflow-hidden relative">
-          <img
-            src="/images/video/video.jpg"
-            alt="demo video image"
-            className="max-w-4xl rounded-md hover:scale-105 transition duration-500"
-          />
-          <Icons.playCircle className="absolute w-12 h-12 text-background z-10" />
+        <div className="overflow-hidden">
+          <Dialog>
+            <DialogTrigger>
+              <img
+                src="/images/video/video.jpg"
+                alt="demo video image"
+                className="max-w-4xl rounded-md hover:scale-105 transition duration-500"
+              />
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle className="mb-2">
+                  Learn about supply chain?
+                </DialogTitle>
+                <video controls={true}>
+                  <source
+                    src="https://youtu.be/Lpp9bHtPAN0?si=45IWvcGT7-Lj0fAl"
+                    type="video/mp4"
+                  />
+                </video>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </section>

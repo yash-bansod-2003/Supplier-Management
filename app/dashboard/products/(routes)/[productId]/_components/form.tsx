@@ -5,7 +5,7 @@ import * as z from "zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Product, $Enums } from "@prisma/client";
+import { Product, $Enums, Inventory } from "@prisma/client";
 import { DashboardHeader } from "@/components/header";
 import { productSchema } from "@/lib/validations/product";
 import { Button } from "@/components/ui/button";
@@ -18,7 +18,6 @@ import {
       FormItem,
       FormLabel,
       FormMessage,
-      useFormField,
 } from "@/components/ui/form";
 import {
       Select,
@@ -27,20 +26,17 @@ import {
       SelectTrigger,
       SelectValue,
 } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/icons";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
-import { Calendar } from "@/components/ui/calendar";
 
 interface ProductFormProps {
       product: Product | null;
+      inventories: Array<Inventory>
 }
 
 export const ProductForm: React.FC<ProductFormProps> = ({
+      inventories,
       product
 }) => {
       const mounted = useMounted();
@@ -53,17 +49,24 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                   name: product?.name || "",
                   description: product?.description || "",
                   color: product?.color || "",
-                  weight: String(product?.weight) || "0",
+                  weight: product?.weight ? String(product?.weight) : "0",
                   unit: product?.unit || $Enums.Units.KILOGRAM,
-                  cost: String(product?.cost) || "0"
+                  cost: product?.cost ? String(product?.cost) : "0",
+                  category: product?.category || "",
+                  inventoryId: product?.inventoryId || "",
+                  quantity: product?.quantity ? String(product?.quantity) : ""
             },
       });
+
+      const endpoint = product ? `/api/products/${product.id}` : "/api/products";
+      const method = product ? "PATCH" : "POST";
+      const message = product ? "updated" : "created";
 
       async function onClick(values: z.infer<typeof productSchema>) {
             setIsLoading(true);
 
-            const response = await fetch("/api/products", {
-                  method: "POST",
+            const response = await fetch(endpoint, {
+                  method: method,
                   headers: {
                         "Content-Type": "application/json",
                   },
@@ -75,12 +78,12 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             if (!response?.ok) {
                   return toast({
                         title: "Something went wrong.",
-                        description: "Your post was not created. Please try again.",
+                        description: `Your post was not ${message}. Please try again.`,
                         variant: "destructive",
                   });
             }
 
-            const post = await response.json();
+            const product = await response.json();
 
             // This forces a cache invalidation.
             router.refresh();
@@ -90,9 +93,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             router.push("/dashboard/products");
 
             return toast({
-                  title: "Product Created Successfully.",
+                  title: `Product ${message} Successfully.`,
                   description:
-                        "Your product was created , refer dashboard for future updates",
+                        `Your product was ${message} , refer dashboard for future updates`,
             });
       }
 
@@ -124,10 +127,10 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                                           <FormItem>
                                                 <FormLabel>Name</FormLabel>
                                                 <FormControl>
-                                                      <Input placeholder="Natural Rubber" {...field} />
+                                                      <Input placeholder="Enter the name of the product" {...field} />
                                                 </FormControl>
                                                 <FormDescription>
-                                                      Enter the name of the raw materia.
+                                                      Provide a clear and descriptive name for the product.
                                                 </FormDescription>
                                                 <FormMessage />
                                           </FormItem>
@@ -142,12 +145,32 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                                                 <FormLabel>Description</FormLabel>
                                                 <FormControl>
                                                       <Input
-                                                            placeholder="High-quality natural rubber for various applications"
+                                                            placeholder="Enter a brief description of the product"
                                                             {...field}
                                                       />
                                                 </FormControl>
                                                 <FormDescription>
-                                                      Provide a brief description of the raw material.
+                                                      Briefly describe the key features or use case of the product.
+                                                </FormDescription>
+                                                <FormMessage />
+                                          </FormItem>
+                                    )}
+                              />
+
+                              <FormField
+                                    control={form.control}
+                                    name="color"
+                                    render={({ field }) => (
+                                          <FormItem>
+                                                <FormLabel>Color</FormLabel>
+                                                <FormControl>
+                                                      <Input
+                                                            placeholder="Enter a color the product"
+                                                            {...field}
+                                                      />
+                                                </FormControl>
+                                                <FormDescription>
+                                                      Enter the hexadecimal code of a color.
                                                 </FormDescription>
                                                 <FormMessage />
                                           </FormItem>
@@ -161,11 +184,10 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                                           <FormItem>
                                                 <FormLabel>Weight</FormLabel>
                                                 <FormControl>
-                                                      <Input placeholder="400" type="number" {...field} />
+                                                      <Input placeholder="Enter a weight of the product" {...field} />
                                                 </FormControl>
                                                 <FormDescription>
-                                                      {" "}
-                                                      Specify the weight of the raw material.
+                                                      Specify the weight of the product.
                                                 </FormDescription>
                                                 <FormMessage />
                                           </FormItem>
@@ -184,7 +206,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                                                 >
                                                       <FormControl>
                                                             <SelectTrigger>
-                                                                  <SelectValue placeholder="Select a color" />
+                                                                  <SelectValue placeholder="Select the unit of the measurment" />
                                                             </SelectTrigger>
                                                       </FormControl>
                                                       <SelectContent>
@@ -217,10 +239,70 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                                           <FormItem>
                                                 <FormLabel>Cost</FormLabel>
                                                 <FormControl>
-                                                      <Input placeholder="17" type="number" {...field} />
+                                                      <Input placeholder="Enter a cost of the product" {...field} />
                                                 </FormControl>
                                                 <FormDescription>
-                                                      Enter the cost of the raw material.
+                                                      Enter the cost of the product.
+                                                </FormDescription>
+                                                <FormMessage />
+                                          </FormItem>
+                                    )}
+                              />
+
+                              <FormField
+                                    control={form.control}
+                                    name="quantity"
+                                    render={({ field }) => (
+                                          <FormItem>
+                                                <FormLabel>Quantity</FormLabel>
+                                                <FormControl>
+                                                      <Input placeholder="Enter a quantity of the product" {...field} />
+                                                </FormControl>
+                                                <FormDescription>
+                                                      Enter the quantity of the product.
+                                                </FormDescription>
+                                                <FormMessage />
+                                          </FormItem>
+                                    )}
+                              />
+
+                              <FormField
+                                    control={form.control}
+                                    name="category"
+                                    render={({ field }) => (
+                                          <FormItem>
+                                                <FormLabel>Category</FormLabel>
+                                                <FormControl>
+                                                      <Input placeholder="Enter a category of the product" {...field} />
+                                                </FormControl>
+                                                <FormDescription>
+                                                      Enter the category of the product.
+                                                </FormDescription>
+                                                <FormMessage />
+                                          </FormItem>
+                                    )}
+                              />
+
+                              <FormField
+                                    control={form.control}
+                                    name="inventoryId"
+                                    render={({ field }) => (
+                                          <FormItem>
+                                                <FormLabel>Inventory</FormLabel>
+                                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                      <FormControl>
+                                                            <SelectTrigger>
+                                                                  <SelectValue placeholder="Select inventory" />
+                                                            </SelectTrigger>
+                                                      </FormControl>
+                                                      <SelectContent>
+                                                            {inventories.map((inventory) => (
+                                                                  <SelectItem key={inventory.id} value={inventory.id}>{inventory.location}</SelectItem>
+                                                            ))}
+                                                      </SelectContent>
+                                                </Select>
+                                                <FormDescription>
+                                                      Specify which inventory is a associated with.
                                                 </FormDescription>
                                                 <FormMessage />
                                           </FormItem>
