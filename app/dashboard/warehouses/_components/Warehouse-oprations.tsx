@@ -60,7 +60,7 @@ export function WarehouseOperations({ warehouse }: WarehouseOperationsProps) {
         <DropdownMenuContent align="end">
           <DropdownMenuItem>
             <Link
-              href={`/dashboard/products/${warehouse.id}`}
+              href={`/dashboard/warehouses/${warehouse.id}`}
               className="flex w-full"
             >
               Edit

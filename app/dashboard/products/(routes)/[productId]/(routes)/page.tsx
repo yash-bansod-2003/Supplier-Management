@@ -19,13 +19,13 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
   const product = await db.product.findUnique({
     where: {
       id: params.productId,
-    }
+    },
   });
 
   const inventories = await db.inventory.findMany({
     where: {
-      userId: user.id
-    }
+      userId: user.id,
+    },
   });
 
   return (

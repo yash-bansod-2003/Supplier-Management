@@ -10,7 +10,8 @@ const UserPageLayout: React.FC<UserPageLayoutProps> = async ({ children }) => {
     return notFound();
   }
 
-  if (user.role !== "ORGANIZATION") {
+  if (user.role === "ORGANIZATION" || user.role === "ADMIN") {
+  } else {
     return redirect("/dashboard");
   }
 

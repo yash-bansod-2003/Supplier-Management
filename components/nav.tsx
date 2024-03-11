@@ -27,7 +27,7 @@ export function DashboardNav({ items, user }: DashboardNavProps) {
 
         const shouldRenderLink =
           (item.isAdmin && user.role === "ADMIN") ||
-          item.isOrganization ||
+          (item.isOrganization && user.role === "ORGANIZATION") ||
           (!item.isAdmin && !item.isOrganization);
 
         return (

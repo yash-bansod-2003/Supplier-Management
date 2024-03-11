@@ -19,6 +19,7 @@ export const dashboardConfig: DashboardConfig = {
       href: "/dashboard/suppliers",
       icon: "store",
       isOrganization: true,
+      isAdmin: true,
     },
     {
       title: "Warehouse",
@@ -34,6 +35,11 @@ export const dashboardConfig: DashboardConfig = {
       title: "Product",
       href: "/dashboard/products",
       icon: "product",
+    },
+    {
+      title: "Orders",
+      href: "/dashboard/orders",
+      icon: "receipt",
     },
     {
       title: "Settings",

@@ -64,6 +64,15 @@ export function UserOperations({ user }: UserOperationsProps) {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
+          <DropdownMenuItem disabled>
+            <Link
+              href={`/dashboard/users/${user.id}/chat`}
+              className="flex w-full"
+            >
+              Chat
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem
             className="flex cursor-pointer items-center text-destructive focus:text-destructive"
             onSelect={() => setShowDeleteAlert(true)}

@@ -1,7 +1,4 @@
 import { Metadata } from "next";
-import Image from "next/image";
-
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -48,9 +45,9 @@ export default function DashboardPage() {
               </svg>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">$45,231.89</div>
+              <div className="text-2xl font-bold">$1200</div>
               <p className="text-xs text-muted-foreground">
-                +20.1% from last month
+                +12% from last month
               </p>
             </CardContent>
           </Card>
@@ -75,9 +72,9 @@ export default function DashboardPage() {
               </svg>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">+2350</div>
+              <div className="text-2xl font-bold">+3</div>
               <p className="text-xs text-muted-foreground">
-                +180.1% from last month
+                +300% from last month
               </p>
             </CardContent>
           </Card>
@@ -99,9 +96,9 @@ export default function DashboardPage() {
               </svg>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">+12,234</div>
+              <div className="text-2xl font-bold">+9</div>
               <p className="text-xs text-muted-foreground">
-                +19% from last month
+                +900% from last month
               </p>
             </CardContent>
           </Card>
@@ -122,9 +119,9 @@ export default function DashboardPage() {
               </svg>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">+573</div>
+              <div className="text-2xl font-bold">+3</div>
               <p className="text-xs text-muted-foreground">
-                +201 since last hour
+                +300 since last month
               </p>
             </CardContent>
           </Card>

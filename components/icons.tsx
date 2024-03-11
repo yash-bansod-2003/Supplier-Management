@@ -50,6 +50,8 @@ import {
   FileWarning,
   Users,
   Store,
+  MessageSquareMore,
+  Receipt,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -89,6 +91,8 @@ export const Icons = {
   trash: Trash2,
   group: Users,
   store: Store,
+  message: MessageSquareMore,
+  receipt: Receipt,
   fileWarning: FileWarning,
   post: FileText,
   notification: BellRing,

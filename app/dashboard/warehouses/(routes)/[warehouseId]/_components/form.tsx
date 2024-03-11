@@ -132,7 +132,7 @@ export const WarehouseForm: React.FC<WarehouseFormProps> = ({ warehouse }) => {
                 <FormLabel>Capacity</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Enter the physical location of the warehouse"
+                    placeholder="Enter the maximum capacity of the warehouse in units"
                     {...field}
                   />
                 </FormControl>
@@ -153,7 +153,7 @@ export const WarehouseForm: React.FC<WarehouseFormProps> = ({ warehouse }) => {
                 <FormLabel>Location</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Enter the maximum capacity of the warehouse in units"
+                    placeholder="Enter the physical location of the warehouse"
                     {...field}
                   />
                 </FormControl>

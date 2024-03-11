@@ -14,7 +14,7 @@ export function WarehouseItem({ warehouse }: WarehouseProps) {
     <div className="flex items-center justify-between p-4 border rounded-md">
       <div className="grid gap-1">
         <Link
-          href={`/editor/${warehouse.id}`}
+          href={`/dashboard/warehouses/${warehouse.id}`}
           className="font-semibold hover:underline"
         >
           {warehouse.name}
