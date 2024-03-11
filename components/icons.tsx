@@ -52,6 +52,7 @@ import {
   Store,
   MessageSquareMore,
   Receipt,
+  BadgeIndianRupee,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -108,6 +109,7 @@ export const Icons = {
   alert: AlertTriangle,
   help: HelpCircle,
   pizza: Pizza,
+  bill: BadgeIndianRupee,
   sun: SunMedium,
   moon: Moon,
   laptop: Laptop,
