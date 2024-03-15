@@ -51,8 +51,6 @@ model User {
   email         String?     @unique
   emailVerified DateTime?
   image         String?
-  createdAt     DateTime    @default(now()) @map(name: "created_at")
-  updatedAt     DateTime    @default(now()) @map(name: "updated_at")
   address       Address?
   role          UserRole    @default(SUPPLIER)
   isRoleUpdated Boolean     @default(false)
@@ -61,8 +59,24 @@ model User {
   products      Product[]
   warehouses    Warehouse[]
   inventories   Inventory[]
+  documents     Document[]
+
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
 
   @@map(name: "users")
+}
+
+model Document {
+  id          String  @id @default(cuid())
+  name        String
+  description String?
+  userId      String  @unique
+  user        User    @relation(fields: [userId], references: [id])
+  files       File[]
+
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
 }
 
 model Address {
@@ -143,6 +157,8 @@ model File {
   thumbnailUrl String?
   uploadedAt   DateTime @default(now()) @map(name: "uploaded_at")
   url          String
+  documentId   String
+  document     Document @relation(fields: [documentId], references: [id])
 
   @@map("files")
 }

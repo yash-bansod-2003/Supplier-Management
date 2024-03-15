@@ -110,6 +110,7 @@ export const Icons = {
   help: HelpCircle,
   pizza: Pizza,
   bill: BadgeIndianRupee,
+  document: FileText,
   sun: SunMedium,
   moon: Moon,
   laptop: Laptop,
