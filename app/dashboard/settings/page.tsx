@@ -10,6 +10,7 @@ import { UserAddressForm } from "@/components/user-address-form";
 import { db } from "@/lib/db";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FileUploader } from "@/components/file-uploader";
+import { DeveloperModeToggle } from "@/components/developer-mode-toggle";
 
 export const metadata = {
   title: "Settings",
@@ -63,6 +64,7 @@ export default async function SettingsPage() {
                 isRoleUpdated: dbUser?.isRoleUpdated || false,
               }}
             />
+            {user.role === "ADMIN" && <DeveloperModeToggle isOn={true} />}
           </div>
         </TabsContent>
         <TabsContent value="address">
