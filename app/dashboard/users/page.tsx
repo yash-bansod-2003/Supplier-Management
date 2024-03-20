@@ -24,7 +24,7 @@ export default async function SettingsPage() {
   return (
     <DashboardShell>
       <DashboardHeader heading="Users" text="Manage all user at one place." />
-      <UsersClient users={users} />
+      <UsersClient users={users} currentUser={{ role: user.role }} />
     </DashboardShell>
   );
 }

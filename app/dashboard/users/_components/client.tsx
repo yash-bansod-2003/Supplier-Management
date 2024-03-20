@@ -4,16 +4,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Icons } from "@/components/icons";
 import { EmptyPlaceholder } from "@/components/empty-placeholder";
 import { buttonVariants } from "@/components/ui/button";
-import Link from "next/link";
 import { UserItem } from "./user-item";
+import { ApiEndpoints } from "./api-endpoints"
 
 type UsersClientProps = React.HTMLAttributes<HTMLDivElement> & {
   users: Array<User>;
+  currentUser: Pick<User, "role">
 };
 
 const UsersClient: React.FC<UsersClientProps> = ({
   users,
   className,
+  currentUser,
   ...props
 }) => {
   return (
@@ -22,6 +24,7 @@ const UsersClient: React.FC<UsersClientProps> = ({
         <TabsList className="space-x-4">
           <TabsTrigger value="list">List</TabsTrigger>
           <TabsTrigger value="table">Table</TabsTrigger>
+          {currentUser.role === "ADMIN" && (<TabsTrigger value="developer">Developer</TabsTrigger>)}
         </TabsList>
 
         <TabsContent value="list">
@@ -49,6 +52,11 @@ const UsersClient: React.FC<UsersClientProps> = ({
             <span className="font-bold">comming soon..</span>
           </p>
         </TabsContent>
+        {currentUser.role === "ADMIN" && (
+          <TabsContent value="developer">
+            <ApiEndpoints />
+          </TabsContent>
+        )}
       </Tabs>
     </div>
   );

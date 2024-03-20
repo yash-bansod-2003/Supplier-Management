@@ -22,7 +22,7 @@ interface ClipboardProps extends React.HTMLAttributes<HTMLDivElement> {
 export const Clipboard: React.FC<ClipboardProps> = ({
   className,
   text,
-  badge = "public",
+  badge = "admin",
   request = "GET",
   origin = true,
   ...props
@@ -33,15 +33,15 @@ export const Clipboard: React.FC<ClipboardProps> = ({
 
   return (
     <Card className={cn("border rounded-md p-0", className)} {...props}>
-      <CardHeader className="border-b flex flex-row items-center justify-between py-1">
+      <CardHeader className="border-b flex flex-row items-center justify-between py-0.5">
         <div className="flex items-center gap-4">
           <div className="flex items-center">
-            <Icons.server className="mr-2 w-5 h-5" />
+            <Icons.server className="mr-2 w-4 h-4" />
             <span className="font-bold text-base">{request}</span>
           </div>
           <Badge
             variant={badge === "public" ? "default" : "destructive"}
-            className="h-fit py-1"
+            className="h-fit py-0.5"
           >
             {badge === "public" ? "Public" : "Admin"}
           </Badge>
