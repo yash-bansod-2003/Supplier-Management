@@ -53,6 +53,8 @@ import {
   MessageSquareMore,
   Receipt,
   BadgeIndianRupee,
+  Server,
+  CopyCheck,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -118,6 +120,8 @@ export const Icons = {
   rupee: IndianRupee,
   save: Save,
   calendar: Calendar,
+  server: Server,
+  copyCheck: CopyCheck,
   playCircle: PlayCircle,
   palette: Palette,
   ruler: Ruler,
