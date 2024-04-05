@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/icons";
 
-type ContactProps = React.HTMLAttributes<HTMLDivElement>;
+type SupportProps = React.HTMLAttributes<HTMLDivElement>;
 
 const summaryItems = [
   {
@@ -29,7 +29,7 @@ const summaryItems = [
   },
 ];
 
-const Contact = () => {
+const Support = () => {
   return (
     <section id="contact" className="overflow-hidden py-16 md:py-10 lg:py-12">
       <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
@@ -37,7 +37,7 @@ const Contact = () => {
           Contact for Enquiries
         </h2>
         <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-          SynergyFlow&apos;s contact section facilitates seamless communication,
+          SynergyFlow's contact section facilitates seamless communication,
           offering avenues for inquiries, feedback, and collaboration, ensuring
           smooth interactions for enhanced engagement and support.
         </p>
@@ -92,10 +92,7 @@ const Contact = () => {
               Similar Questions
             </p>
             {summaryItems.map((item) => (
-              <details
-                key={item.details}
-                className="border-2 border-gray-300 p-4 bg-slate-100 m-2"
-              >
+              <details className="border-2 border-gray-300 p-4 bg-slate-100 m-2">
                 <summary className="text-lg text-semibold text-blue-700">
                   {item.details}
                 </summary>
@@ -109,6 +106,6 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default Support;
 
-export { Contact };
+export { Support };

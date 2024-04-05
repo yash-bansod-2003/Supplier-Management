@@ -12,7 +12,7 @@ export const marketingConfig: MarketingConfig = {
     },
     {
       title: "Service",
-      href: "/sercice",
+      href: "/service",
     },
     {
       title: "About",
