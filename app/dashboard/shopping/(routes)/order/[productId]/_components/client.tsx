@@ -25,6 +25,8 @@ import {
       FormLabel,
       FormMessage,
 } from "@/components/ui/form"
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 
 interface ProductOrderClientProps {
@@ -36,6 +38,8 @@ function computeTotalPrice(price: number, quantity: number) {
 }
 
 export const ProductOrderClient: React.FC<ProductOrderClientProps> = ({ product }) => {
+      const { toast } = useToast();
+      const router = useRouter();
 
       const formSchema = z.object({
             quantity: z.string()
@@ -50,7 +54,10 @@ export const ProductOrderClient: React.FC<ProductOrderClientProps> = ({ product 
 
       const [tax, setTax] = React.useState<number>(18);
       const [subtotal, setSubtotal] = React.useState<number>(product.cost);
-      const [total, setTotal] = React.useState<number>(product.cost + tax);
+      const [shipping, setShipping] = React.useState<number>(50);
+      const [total, setTotal] = React.useState<number>(product.cost + tax + shipping);
+      const [isLoading, setIsLoading] = React.useState<boolean>(false);
+      const [productId, setProductId] = React.useState<string>(product.id);
 
       const form = useForm<z.infer<typeof formSchema>>({
             resolver: zodResolver(formSchema),
@@ -59,8 +66,46 @@ export const ProductOrderClient: React.FC<ProductOrderClientProps> = ({ product 
             },
       });
 
-      function onSubmit(values: z.infer<typeof formSchema>) {
-            console.log({ quantity: values.quantity, total, subtotal, tax, supplierId: product.userId })
+      async function onSubmit(values: z.infer<typeof formSchema>) {
+            setIsLoading(true);
+
+            const response = await fetch("/api/orders", {
+                  method: "POST",
+                  headers: {
+                        "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                        shipping,
+                        subtotal,
+                        total,
+                        tax,
+                        productId
+                  }),
+            });
+
+            setIsLoading(false);
+
+            if (!response?.ok) {
+                  return toast({
+                        title: "Something went wrong.",
+                        description: `Your order was not placed. Please try again.`,
+                        variant: "destructive",
+                  });
+            }
+
+            const product = await response.json();
+
+            // This forces a cache invalidation.
+            router.refresh();
+
+            form.reset();
+
+            router.push("/dashboard/orders");
+
+            return toast({
+                  title: `order  placed Successfully.`,
+                  description: `Your product was placed , refer dashboard for future updates`,
+            });
       }
 
       const watchQuantityField = form.watch("quantity");
@@ -86,6 +131,10 @@ export const ProductOrderClient: React.FC<ProductOrderClientProps> = ({ product 
                                           <div className="flex flex-col space-y-3">
                                                 <Label htmlFor="tax">Tax</Label>
                                                 <Input disabled id="tax" value={tax} />
+                                          </div>
+                                          <div className="flex flex-col space-y-3">
+                                                <Label htmlFor="tax">Shipping</Label>
+                                                <Input disabled id="tax" value={shipping} />
                                           </div>
                                           <div className="flex flex-col space-y-1.5">
                                                 <FormField

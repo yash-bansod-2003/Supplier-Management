@@ -146,8 +146,7 @@ model Product {
   Inventory   Inventory @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
   createdAt   DateTime  @default(now()) @map(name: "created_at")
   updatedAt   DateTime  @default(now()) @map(name: "updated_at")
-  orderId     String?   @unique
-  order       Order?    @relation(fields: [orderId], references: [id])
+  order       Order?
 
   @@map("products")
 }
@@ -165,7 +164,8 @@ model Order {
 
   organization User     @relation("organization", fields: [organizationId], references: [id])
   supplier     User     @relation("supplier", fields: [supplierId], references: [id])
-  Product      Product?
+  productId    String?  @unique
+  Product      Product? @relation(fields: [productId], references: [id])
 
   @@unique([organizationId, supplierId])
   @@map(name: "orders")
