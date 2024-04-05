@@ -52,7 +52,7 @@ export default async function SettingsPage() {
         <TabsList className="space-x-4">
           <TabsTrigger value="account">Account</TabsTrigger>
           <TabsTrigger value="address">Addresses</TabsTrigger>
-          <TabsTrigger value="documents">Documents</TabsTrigger>
+          {user.role !== "ADMIN" && (<TabsTrigger value="documents">Documents</TabsTrigger>)}
         </TabsList>
         <TabsContent value="account">
           <div className="grid gap-10">
@@ -64,7 +64,6 @@ export default async function SettingsPage() {
                 isRoleUpdated: dbUser?.isRoleUpdated || false,
               }}
             />
-            {user.role === "ADMIN" && <DeveloperModeToggle isOn={true} />}
           </div>
         </TabsContent>
         <TabsContent value="address">
@@ -72,9 +71,11 @@ export default async function SettingsPage() {
             <UserAddressForm user={{ id: user.id, address: dbUser?.address }} />
           </div>
         </TabsContent>
-        <TabsContent value="documents">
-          <FileUploader />
-        </TabsContent>
+        {user.role !== "ADMIN" && (
+          <TabsContent value="documents">
+            <FileUploader />
+          </TabsContent>
+        )}
       </Tabs>
     </DashboardShell>
   );

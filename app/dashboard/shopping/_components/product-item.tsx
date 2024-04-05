@@ -5,8 +5,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Product } from "@prisma/client";
+import Link from "next/link";
 
 type ProductItemProps = {
   product: Product;
@@ -21,9 +22,9 @@ export const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
       </CardHeader>
       <CardContent>
         <div></div>
-        <Button size="sm" variant="secondary">
+        <Link href={`/dashboard/shopping/order/${product.id}`} className={buttonVariants({ size: "sm", variant: "secondary" })} >
           Place Order
-        </Button>
+        </Link>
       </CardContent>
     </Card>
   );

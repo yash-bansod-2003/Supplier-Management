@@ -1,6 +1,6 @@
 import { DashboardHeader } from "@/components/header";
 import { DashboardShell } from "@/components/shell";
-import { ProductItem } from "./_components/product-item";
+import { ProductItem } from "../_components/product-item";
 import { db } from "@/lib/db";
 
 export default async function Page() {

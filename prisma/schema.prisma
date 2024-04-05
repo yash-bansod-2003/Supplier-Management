@@ -146,20 +146,22 @@ model Product {
   Inventory   Inventory @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
   createdAt   DateTime  @default(now()) @map(name: "created_at")
   updatedAt   DateTime  @default(now()) @map(name: "updated_at")
-  Order       Order?    @relation(fields: [orderId], references: [id])
-  orderId     String?
+  orderId     String?   @unique
+  order       Order?    @relation(fields: [orderId], references: [id])
+
+  @@map("products")
 }
 
 model Order {
-  id             String    @id @default(cuid())
+  id             String   @id @default(cuid())
   organizationId String
   supplierId     String
-  products       Product[]
-  createdAt      DateTime  @default(now()) @map(name: "created_at")
-  updatedAt      DateTime  @default(now()) @map(name: "updated_at")
+  createdAt      DateTime @default(now()) @map(name: "created_at")
+  updatedAt      DateTime @default(now()) @map(name: "updated_at")
 
-  organization User @relation("organization", fields: [organizationId], references: [id])
-  supplier     User @relation("supplier", fields: [supplierId], references: [id])
+  organization User     @relation("organization", fields: [organizationId], references: [id])
+  supplier     User     @relation("supplier", fields: [supplierId], references: [id])
+  Product      Product?
 
   @@unique([organizationId, supplierId])
   @@map(name: "orders")
