@@ -154,6 +154,10 @@ model Product {
 
 model Order {
   id             String   @id @default(cuid())
+  subtotal       Int
+  shipping       Int
+  total          Int
+  tax            Int
   organizationId String
   supplierId     String
   createdAt      DateTime @default(now()) @map(name: "created_at")
