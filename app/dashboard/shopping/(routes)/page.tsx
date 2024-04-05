@@ -2,9 +2,29 @@ import { DashboardHeader } from "@/components/header";
 import { DashboardShell } from "@/components/shell";
 import { ProductItem } from "../_components/product-item";
 import { db } from "@/lib/db";
+import { getCurrentUser } from "@/lib/session";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
-  const products = await db.product.findMany();
+
+  const user = await getCurrentUser();
+
+  if (!user) {
+    return redirect("/login")
+  }
+
+  const products = await db.product.findMany({
+    where: {
+      userId: {
+        not: {
+          equals: user.id
+        }
+      },
+      user: {
+        role: "SUPPLIER"
+      }
+    }
+  });
 
   return (
     <DashboardShell>

@@ -135,9 +135,9 @@ model Product {
   name        String
   description String?
   category    String
-  weight      Float?
+  weight      Float
   unit        Units     @default(GRAM)
-  cost        Float?
+  cost        Float
   color       String
   quantity    Int
   userId      String
