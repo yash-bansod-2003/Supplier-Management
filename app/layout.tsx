@@ -77,7 +77,7 @@ export default function RootLayout({
           fontHeading.variable,
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light">
           <EdgeStoreProvider>
             {children}
             <Toaster />

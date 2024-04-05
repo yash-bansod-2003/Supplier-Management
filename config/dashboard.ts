@@ -18,7 +18,6 @@ export const dashboardConfig: DashboardConfig = {
       title: "Shopping",
       href: "/dashboard/shopping",
       icon: "shop",
-      isAdmin: true,
       isOrganization: true,
     },
     {
