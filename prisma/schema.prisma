@@ -46,23 +46,24 @@ enum UserRole {
 }
 
 model User {
-  id            String      @id @default(cuid())
-  name          String?
-  email         String?     @unique
-  emailVerified DateTime?
-  image         String?
-  address       Address?
-  role          UserRole    @default(SUPPLIER)
-  isRoleUpdated Boolean     @default(false)
-  accounts      Account[]
-  sessions      Session[]
-  products      Product[]
-  warehouses    Warehouse[]
-  inventories   Inventory[]
-  documents     Document[]
-
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @default(now()) @map(name: "updated_at")
+  id                 String      @id @default(cuid())
+  name               String?
+  email              String?     @unique
+  emailVerified      DateTime?
+  image              String?
+  address            Address?
+  role               UserRole    @default(SUPPLIER)
+  isRoleUpdated      Boolean     @default(false)
+  accounts           Account[]
+  sessions           Session[]
+  products           Product[]
+  warehouses         Warehouse[]
+  inventories        Inventory[]
+  documents          Document[]
+  organizationOrders Order[]     @relation("organization")
+  supplierOrders     Order[]     @relation("supplier")
+  createdAt          DateTime    @default(now()) @map(name: "created_at")
+  updatedAt          DateTime    @default(now()) @map(name: "updated_at")
 
   @@map(name: "users")
 }
@@ -145,8 +146,23 @@ model Product {
   Inventory   Inventory @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
   createdAt   DateTime  @default(now()) @map(name: "created_at")
   updatedAt   DateTime  @default(now()) @map(name: "updated_at")
+  Order       Order?    @relation(fields: [orderId], references: [id])
+  orderId     String?
+}
 
-  @@map(name: "products")
+model Order {
+  id             String    @id @default(cuid())
+  organizationId String
+  supplierId     String
+  products       Product[]
+  createdAt      DateTime  @default(now()) @map(name: "created_at")
+  updatedAt      DateTime  @default(now()) @map(name: "updated_at")
+
+  organization User @relation("organization", fields: [organizationId], references: [id])
+  supplier     User @relation("supplier", fields: [supplierId], references: [id])
+
+  @@unique([organizationId, supplierId])
+  @@map(name: "orders")
 }
 
 model File {
