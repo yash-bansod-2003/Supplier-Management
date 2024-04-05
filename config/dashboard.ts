@@ -15,6 +15,13 @@ export const dashboardConfig: DashboardConfig = {
       isAdmin: true,
     },
     {
+      title: "Shopping",
+      href: "/dashboard/shopping",
+      icon: "shop",
+      isAdmin: true,
+      isOrganization: true,
+    },
+    {
       title: "Suppliers",
       href: "/dashboard/suppliers",
       icon: "store",

@@ -50,7 +50,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       description: product?.description || "",
       color: product?.color || "",
       weight: product?.weight ? String(product?.weight) : "0",
-      unit: product?.unit || $Enums.Units.KILOGRAM,
+      unit: product?.unit || $Enums.Units.GRAM,
       cost: product?.cost ? String(product?.cost) : "0",
       category: product?.category || "",
       inventoryId: product?.inventoryId || "",
@@ -212,6 +212,12 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
+                    <SelectItem
+                      key={$Enums.Units.GRAM}
+                      value={$Enums.Units.GRAM}
+                    >
+                      GRAM
+                    </SelectItem>
                     <SelectItem
                       key={$Enums.Units.KILOGRAM}
                       value={$Enums.Units.KILOGRAM}

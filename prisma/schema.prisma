@@ -124,6 +124,7 @@ model Inventory {
 }
 
 enum Units {
+  GRAM
   KILOGRAM
   LITER
 }
@@ -134,7 +135,7 @@ model Product {
   description String?
   category    String
   weight      Float?
-  unit        Units     @default(KILOGRAM)
+  unit        Units     @default(GRAM)
   cost        Float?
   color       String
   quantity    Int
