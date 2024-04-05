@@ -21,7 +21,7 @@ const DashboardFooter: React.FC<DashboardFooterProps> = ({
               rel="noreferrer"
               className="font-medium underline underline-offset-4"
             >
-              Theam 8
+              Team 8
             </a>
           </p>
         </div>

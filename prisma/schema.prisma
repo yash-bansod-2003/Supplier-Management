@@ -167,7 +167,6 @@ model Order {
   productId    String?  @unique
   Product      Product? @relation(fields: [productId], references: [id])
 
-  @@unique([organizationId, supplierId])
   @@map(name: "orders")
 }
 

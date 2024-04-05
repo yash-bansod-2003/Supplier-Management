@@ -11,13 +11,43 @@ import { DashboardHeader } from "@/components/header";
 import { DashboardShell } from "@/components/shell";
 import { Overview } from "@/components/overview";
 import { RecentSales } from "@/components/recent-sales";
+import { db } from "@/lib/db";
+import { getCurrentUser } from "@/lib/session";
+import { redirect } from "next/navigation";
+import { Order } from "@prisma/client";
 
 export const metadata: Metadata = {
   title: "Dashboard",
   description: "dashboard app built using the components.",
 };
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+
+  const user = await getCurrentUser();
+
+  if (!user) {
+    return redirect("/login")
+  }
+
+  const users = await db.user.findMany();
+
+  const orders = await db.order.findMany({
+    where: {
+      OR: [
+        {
+          organizationId: user.id
+        },
+        {
+          supplierId: user.id
+        }
+      ]
+    }
+  });
+
+  const totalRevenue = orders.reduce((acc: number, order: Order) => {
+    return acc + order.total
+  }, 0)
+
   return (
     <DashboardShell>
       <DashboardHeader
@@ -45,7 +75,7 @@ export default function DashboardPage() {
               </svg>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">$1200</div>
+              <div className="text-2xl font-bold">+{totalRevenue}</div>
               <p className="text-xs text-muted-foreground">
                 +12% from last month
               </p>
@@ -72,7 +102,7 @@ export default function DashboardPage() {
               </svg>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">+3</div>
+              <div className="text-2xl font-bold">+{users.length}</div>
               <p className="text-xs text-muted-foreground">
                 +300% from last month
               </p>
@@ -96,7 +126,7 @@ export default function DashboardPage() {
               </svg>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">+9</div>
+              <div className="text-2xl font-bold">+{orders.length}</div>
               <p className="text-xs text-muted-foreground">
                 +900% from last month
               </p>
@@ -119,7 +149,7 @@ export default function DashboardPage() {
               </svg>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">+3</div>
+              <div className="text-2xl font-bold">+{users.length}</div>
               <p className="text-xs text-muted-foreground">
                 +300 since last month
               </p>

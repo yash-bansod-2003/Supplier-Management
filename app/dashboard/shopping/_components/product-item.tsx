@@ -21,7 +21,10 @@ export const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
         <CardDescription>{product.description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <div></div>
+        <div className="space-y-3 mb-4">
+          <p>quantity : <span>{product.quantity}</span></p>
+          <p>price per unit : <span>{product.cost}</span></p>
+        </div>
         <Link href={`/dashboard/shopping/order/${product.id}`} className={buttonVariants({ size: "sm", variant: "secondary" })} >
           Place Order
         </Link>

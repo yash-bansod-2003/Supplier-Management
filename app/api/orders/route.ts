@@ -33,8 +33,9 @@ export async function POST(req: Request) {
                   }
             });
 
+
             if (!product) {
-                  return NextResponse.json(null, { status: 500 });
+                  return NextResponse.json({ error: "no product found" }, { status: 404 });
             }
 
             const dbOrder = await db.order.create({
@@ -44,10 +45,11 @@ export async function POST(req: Request) {
                         tax: Number(tax),
                         total: Number(total),
                         organizationId: session.user.id,
-                        productId,
+                        productId: product.id,
                         supplierId: product.userId,
                   },
             });
+
 
             return NextResponse.json(dbOrder, { status: 201 });
       } catch (error) {
@@ -55,6 +57,6 @@ export async function POST(req: Request) {
                   return new NextResponse(JSON.stringify(error.issues), { status: 422 });
             }
 
-            return new NextResponse(null, { status: 500 });
+            return NextResponse.json({ error }, { status: 500 });
       }
 }

@@ -17,7 +17,7 @@ const OrderPage = async () => {
 
   return (
     <DashboardShell>
-      <DashboardHeader heading="Users" text="Manage all user at one place." />
+      <DashboardHeader heading={`Orders(${orders.length})`} text="Take overview of your all orders" />
       <OrderClient orders={orders} currentUser={{ role: user.role }} />
     </DashboardShell>
   );

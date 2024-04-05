@@ -16,9 +16,13 @@ const OrderClient: React.FC<OrderClientProps> = ({
 }) => {
   const formattedOrdersArray: OrderColumn[] = orders.reduce<OrderColumn[]>(
     (acc, order) => {
-      const { id } = order;
+      const { id, subtotal, total, shipping, tax } = order;
       acc.push({
         id,
+        subtotal,
+        total,
+        shipping,
+        tax,
       });
       return acc;
     },
