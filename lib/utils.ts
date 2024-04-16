@@ -16,5 +16,5 @@ export function formatDate(input: string | number): string {
 }
 
 export function getCurrentFormatedDate() {
-  return format(new Date(), "do 'of' MMMM yyyy 'at' h:mm a")
+  return format(new Date(), "do 'of' MMMM yyyy 'at' h:mm a");
 }

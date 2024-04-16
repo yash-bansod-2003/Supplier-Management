@@ -52,7 +52,9 @@ export default async function SettingsPage() {
         <TabsList className="space-x-4">
           <TabsTrigger value="account">Account</TabsTrigger>
           <TabsTrigger value="address">Addresses</TabsTrigger>
-          {user.role !== "ADMIN" && (<TabsTrigger value="documents">Documents</TabsTrigger>)}
+          {user.role !== "ADMIN" && (
+            <TabsTrigger value="documents">Documents</TabsTrigger>
+          )}
         </TabsList>
         <TabsContent value="account">
           <div className="grid gap-10">

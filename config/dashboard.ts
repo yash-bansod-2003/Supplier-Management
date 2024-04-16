@@ -43,12 +43,6 @@ export const dashboardConfig: DashboardConfig = {
       icon: "product",
     },
     {
-      title: "Documents",
-      href: "/dashboard/documents",
-      icon: "document",
-      isAdmin: true,
-    },
-    {
       title: "Orders",
       href: "/dashboard/orders",
       icon: "receipt",

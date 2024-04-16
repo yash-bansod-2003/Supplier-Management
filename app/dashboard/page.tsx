@@ -22,11 +22,10 @@ export const metadata: Metadata = {
 };
 
 export default async function DashboardPage() {
-
   const user = await getCurrentUser();
 
   if (!user) {
-    return redirect("/login")
+    return redirect("/login");
   }
 
   const users = await db.user.findMany();
@@ -35,18 +34,18 @@ export default async function DashboardPage() {
     where: {
       OR: [
         {
-          organizationId: user.id
+          organizationId: user.id,
         },
         {
-          supplierId: user.id
-        }
-      ]
-    }
+          supplierId: user.id,
+        },
+      ],
+    },
   });
 
   const totalRevenue = orders.reduce((acc: number, order: Order) => {
-    return acc + order.total
-  }, 0)
+    return acc + order.total;
+  }, 0);
 
   return (
     <DashboardShell>

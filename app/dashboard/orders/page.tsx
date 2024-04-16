@@ -13,11 +13,20 @@ const OrderPage = async () => {
     redirect(authOptions?.pages?.signIn || "/login");
   }
 
-  const orders = await db.order.findMany();
+  const orders = await db.order.findMany({
+    include: {
+      product: true,
+      organization: true,
+      supplier: true,
+    },
+  });
 
   return (
     <DashboardShell>
-      <DashboardHeader heading={`Orders(${orders.length})`} text="Take overview of your all orders" />
+      <DashboardHeader
+        heading={`Orders(${orders.length})`}
+        text="Take overview of your all orders"
+      />
       <OrderClient orders={orders} currentUser={{ role: user.role }} />
     </DashboardShell>
   );
