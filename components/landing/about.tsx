@@ -23,12 +23,12 @@ const developers = [
   },
   {
     name: "Chaitali Daware",
-    role: "Data Analyst",
+    role: "Frontend Devoloper",
     imgSrc: "/images/chaitali.jpg",
   },
   {
     name: "Aachal Chede",
-    role: "Frontend Devoloper",
+    role: "Data Analyst",
     imgSrc: "/images/aachal.jpeg",
   },
 ];
