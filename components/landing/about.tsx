@@ -1,12 +1,15 @@
 "use client";
-import * as React from "react";
 
+import * as React from "react";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import Image from "next/image";
 type AboutProps = React.HTMLAttributes<HTMLDivElement>;
+
 const developers = [
   {
     name: "Yash Bansod",
     role: "Full Stack Devoloper",
-    imgSrc: "/images/yash.jpeg",
+    imgSrc: "/images/yash.jpg",
   },
   {
     name: "Gopal Tayade",
@@ -15,13 +18,13 @@ const developers = [
   },
   {
     name: "Chandan Werulkar",
-    role: "Kuch nhi aata",
+    role: "Backend Developer",
     imgSrc: "/images/Chandan.jpg",
   },
   {
     name: "Chaitali Daware",
     role: "Data Analyst",
-    imgSrc: "/images/aachal.jpeg",
+    imgSrc: "/images/chaitali.jpg",
   },
   {
     name: "Aachal Chede",
@@ -42,7 +45,7 @@ const About: React.FC<AboutProps> = ({ className, ...props }) => {
         </h2>
         <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
           Our team of developers is dedicated to continuously enhancing
-          SynergyFlow's capabilities, implementing innovative solutions to
+          SynergyFlow&apos;s capabilities, implementing innovative solutions to
           optimize supply chain management processes and drive sustainable
           growth.
         </p>
@@ -50,10 +53,18 @@ const About: React.FC<AboutProps> = ({ className, ...props }) => {
 
       <div className="mx-auto grid justify-center gap-12 grid-cols-3 md:max-w-[52rem]">
         {developers.map((item) => (
-          <div className="shadow-xl bg-slate-50">
-            <div className="relative mx-4 mt-4 h-48 w-48 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
+          <div key={item.name} className="shadow-xl bg-slate-50 p-4">
+            {/* <div className="relative mx-4 mt-4 h-48 w-48 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
               <img src={item.imgSrc} alt="profile-picture" />
-            </div>
+            </div> */}
+            <AspectRatio ratio={1 / 1} className="bg-muted">
+              <Image
+                src={item.imgSrc}
+                alt="Photo by Drew Beamer"
+                fill
+                className="rounded-md object-contain"
+              />
+            </AspectRatio>
             <div className="p-6 text-center">
               <h4 className="mb-2 block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
                 {item.name}
@@ -119,7 +130,7 @@ const About: React.FC<AboutProps> = ({ className, ...props }) => {
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="lucide lucide-instagram"
+                  className="lucide lucide-instagram"
                 >
                   <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
